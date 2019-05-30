@@ -1,0 +1,42 @@
+<% if user_signed_in? %>
+    <h1>Bienvenido a tu Historial Médico <%= current_user.email %></h1>
+<% else %>
+    <h1>Bienvenido, ingresa a tu cuenta</h1>
+<%end%>
+<%= form_tag articles_path, :method => 'get' do %>
+    <%= label_tag "Fecha"%> -
+    <%= text_field_tag :search, params[:search] %>
+    <%= label_tag "Fecha Max"%> -
+    <%= text_field_tag :searchmax, params[:searchmax] %>
+    <%= label_tag "Titulo"%> -
+    <%= text_field_tag :searchtitle, params[:searchtitle] %>
+    <%= label_tag "Tipo de Consulta"%> -
+    <%= text_field_tag :searchtipo, params[:searchtipo] %>
+    <%= label_tag "CIE"%> -
+    <%= text_field_tag :searchcie, params[:searchcie] %>
+    <%= submit_tag "Buscar" %>
+<% end %>
+<h1>Consultas</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Fecha</th>
+            <th>Tipo de Consulta</th>
+            <th>CIE-10</th>
+            <th colspan="4"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @articles.each do |article| %>
+            <tr>
+                <td><%= link_to article.title, article %></td>
+                <td><%= article.fecha %></td>
+                <td><%= article.tipo_consulta %></td>
+                <td><%= article.cie %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
